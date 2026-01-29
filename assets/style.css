@@ -1,121 +1,82 @@
+:root {
+    --primary-color: #00ff88;
+    --bg-color: #0a0a0a;
+    --card-bg: #141414;
+    --text-color: #ffffff;
+    --text-muted: #a0a0a0;
+    --danger: #ff4444;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
 
-body {
-    background-color: #121212;
-    color: #ffffff;
-}
+body { background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; }
+
 header {
-    background-color: #000;
-    padding: 20px 50px;
+    background-color: rgba(0,0,0,0.95);
+    padding: 1rem 5%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 3px solid #00ff88;
+    border-bottom: 2px solid var(--primary-color);
+    position: sticky; top: 0; z-index: 1000;
 }
-header h1 { color: #00ff88; font-weight: bold; text-transform: uppercase; }
-nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 500; transition: 0.3s;}
-nav a:hover { color: #00ff88; }
+.logo { font-size: 1.5rem; font-weight: bold; color: #fff; text-decoration: none; }
+.logo span { color: var(--primary-color); }
+
+nav a { color: #fff; text-decoration: none; margin-left: 20px; font-weight: 500; transition: 0.3s; }
+nav a:hover, nav a.active { color: var(--primary-color); }
+nav a.btn-login { border: 1px solid var(--primary-color); padding: 5px 15px; border-radius: 4px; }
 
 .hero {
-    height: 80vh;
+    min-height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://source.unsplash.com/1600x900/?gym,workout');
-    background-size: cover;
+    padding: 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.6), var(--bg-color)), url('https://source.unsplash.com/1600x900/?gym,fitness');
+    background-size: cover; background-position: center;
 }
-.hero h2 { font-size: 3rem; margin-bottom: 10px; }
-.hero span { color: #00ff88; }
-.hero p { font-size: 1.2rem; max-width: 600px; margin-bottom: 30px; }
-
+.hero h2 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1rem; }
+.hero span { color: var(--primary-color); }
 .btn-cta {
-    padding: 15px 40px;
-    background-color: #00ff88;
-    color: #000;
-    font-weight: bold;
-    text-decoration: none;
-    font-size: 1.2rem;
-    border-radius: 5px;
-    transition: transform 0.2s;
+    display: inline-block; padding: 15px 40px; margin-top: 20px;
+    background-color: var(--primary-color); color: #000;
+    font-weight: 800; text-decoration: none; text-transform: uppercase;
+    border-radius: 50px; transition: transform 0.2s, box-shadow 0.2s;
 }
-.btn-cta:hover { transform: scale(1.05); box-shadow: 0 0 15px #00ff88; }
-.planos-section { padding: 60px 20px; text-align: center; }
-.planos-container {
-    display: flex;
-    justify-content: center;
-    gap: 30px;
-    flex-wrap: wrap;
-    margin-top: 40px;
-}
-.card-plano {
-    background-color: #1e1e1e;
-    border: 1px solid #333;
-    padding: 30px;
-    width: 300px;
-    border-radius: 10px;
-    transition: 0.3s;
-}
-.card-plano:hover { border-color: #00ff88; transform: translateY(-10px); }
-.card-plano h3 { color: #00ff88; margin-bottom: 15px; }
-.price { font-size: 2rem; font-weight: bold; margin-bottom: 20px; display: block; }
-.btn-matricula {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background-color: transparent;
-    border: 2px solid #00ff88;
-    color: #fff;
-    text-decoration: none;
-    margin-top: 20px;
-    font-weight: bold;
-}
-.btn-matricula:hover { background-color: #00ff88; color: #000; }
-.container-form {
-    max-width: 500px;
-    margin: 50px auto;
-    padding: 40px;
-    background-color: #1e1e1e;
-    border-radius: 10px;
-    border: 1px solid #333;
-    box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
-}
-.form-group { margin-bottom: 20px; text-align: left; }
+.btn-cta:hover { transform: translateY(-3px); box-shadow: 0 0 20px rgba(0, 255, 136, 0.4); }
 
-.form-group label {
-    display: block;
-    margin-bottom: 8px;
-    color: #00ff88;
-    font-weight: 500;
+.grid-container {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px; padding: 50px 5%;
 }
-.form-group input {
-    width: 100%;
-    padding: 12px;
-    background-color: #121212;
-    border: 1px solid #333;
-    color: #fff;
-    border-radius: 5px;
-    outline: none;
-    transition: 0.3s;
+.card {
+    background-color: var(--card-bg); padding: 30px;
+    border-radius: 15px; border: 1px solid #333; text-align: center;
+    transition: 0.3s; position: relative; overflow: hidden;
 }
-.form-group input:focus {
-    border-color: #00ff88;
-    box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+.card:hover { border-color: var(--primary-color); transform: translateY(-5px); }
+.card h3 { color: var(--primary-color); margin-bottom: 10px; }
+.card .price { font-size: 2.5rem; font-weight: bold; margin: 20px 0; display: block; }
+.card ul { list-style: none; text-align: left; margin-bottom: 20px; color: var(--text-muted); }
+.card ul li { margin-bottom: 8px; border-bottom: 1px solid #222; padding-bottom: 5px; }
+
+.container-small { max-width: 500px; margin: 60px auto; padding: 20px; }
+.form-box { background: var(--card-bg); padding: 40px; border-radius: 10px; border: 1px solid #333; }
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; color: var(--text-muted); margin-bottom: 5px; font-size: 0.9rem; }
+.input-group input {
+    width: 100%; padding: 12px; background: #000; border: 1px solid #333;
+    color: #fff; border-radius: 5px; outline: none;
 }
-.msg-sucesso {
-    background-color: rgba(0, 255, 136, 0.2);
-    border: 1px solid #00ff88;
-    padding: 15px;
-    margin-bottom: 20px;
-    color: #fff;
-    border-radius: 5px;
-}
-.msg-erro {
-    background-color: rgba(255, 0, 0, 0.2);
-    border: 1px solid #ff4444;
-    padding: 15px;
-    margin-bottom: 20px;
-    color: #fff;
-    border-radius: 5px;
+.input-group input:focus { border-color: var(--primary-color); }
+.alert { padding: 10px; margin-bottom: 15px; border-radius: 4px; font-size: 0.9rem; }
+.alert-error { background: rgba(255, 68, 68, 0.1); border: 1px solid var(--danger); color: #ff8888; }
+.alert-success { background: rgba(0, 255, 136, 0.1); border: 1px solid var(--primary-color); color: var(--primary-color); }
+
+@media (max-width: 768px) {
+    .hero h2 { font-size: 2rem; }
+    header { flex-direction: column; gap: 15px; }
 }

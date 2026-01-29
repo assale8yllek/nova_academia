@@ -1,55 +1,36 @@
 <?php
-
 require_once 'config/database.php';
+require_once 'includes/header.php';
 
-$sql = "SELECT * FROM planos";
-$stmt = $pdo->query($sql);
+$stmt = $pdo->query("SELECT * FROM planos");
 $planos = $stmt->fetchAll();
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Academia Pro | Sua Melhor Versão</title>
-    <link rel="stylesheet" href="assets/css/style.css">
-</head>
-<body>
+<section class="hero">
+    <h2>SUPERE SEUS<br><span>LIMITES</span></h2>
+    <p style="color: #ccc; max-width: 600px; margin: 20px 0;">
+        Estrutura completa, profissionais de elite e o ambiente perfeito para você alcançar sua melhor versão.
+    </p>
+    <a href="#planos" class="btn-cta">Começar Agora</a>
+</section>
 
-<header>
-        <h1>ACADEMIA <span>PRO</span></h1>
-        <nav>
-            <a href="#inicio">Início</a>
-            <a href="#beneficios">Benefícios</a>
-            <a href="#planos">Planos</a>
-            <a href="#contato">Contato</a>
-        </nav>
-    </header>
+<section id="planos">
+    <h2 style="text-align: center; margin-top: 50px; font-size: 2rem;">NOSSOS <span style="color:var(--primary-color)">PLANOS</span></h2>
+    <div class="grid-container">
+        <?php foreach ($planos as $plano): ?>
+            <div class="card">
+                <h3><?php echo htmlspecialchars($plano['nome']); ?></h3>
+                <span class="price">R$ <?php echo number_format($plano['preco'], 2, ',', '.'); ?></span>
+                <ul>
+                    <?php 
+                        $benefits = explode('+', $plano['beneficios']);
+                        foreach($benefits as $b) { echo "<li>" . trim($b) . "</li>"; }
+                    ?>
+                </ul>
+                <a href="cadastro.php?plano=<?php echo $plano['id']; ?>" class="btn-cta" style="width:100%; font-size: 0.9rem;">ESCOLHER</a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</section>
 
-    <section id="inicio" class="hero">
-        <h2>Transforme seu <span>Corpo</span>,<br>Transforme sua <span>Mente</span></h2>
-        <p>Acompanhamento profissional, equipamentos de ponta e ambiente climatizado. Agende sua aula experimental gratuita hoje mesmo.</p>
-        <p><strong>Horários:</strong> Seg-Sex: 06h às 23h | Sáb-Dom: 08h às 14h</p>
-        <br>
-        <a href="#planos" class="btn-cta">QUERO COMEÇAR AGORA</a>
-    </section>
-
-    <section id="planos" class="planos-section">
-        <h2>Escolha seu Plano</h2>
-        <p>Sem taxas escondidas. Cancele quando quiser.</p>
-
-        <div class="planos-container">
-            <?php foreach ($planos as $plano): ?>
-                <div class="card-plano">
-                    <h3><?php echo htmlspecialchars($plano['nome']); ?></h3>
-                    <span class="price">R$ <?php echo number_format($plano['preco'], 2, ',', '.'); ?></span>
-                    <p><?php echo htmlspecialchars($plano['beneficios']); ?></p>
-                    <a href="cadastro.php?plano=<?php echo $plano['id']; ?>" class="btn-matricula">MATRICULE-SE</a>
-                </div>
-            <?php endforeach; ?>
-        </div>
-    </section>
-
-</body>
-</html>
+<?php require_once 'includes/footer.php'; ?>
