@@ -56,25 +56,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form action="cadastro.php" method="POST">
             <input type="hidden" name="plano_id" value="<?php echo $plano_selecionado; ?>">
 
-            <div class="grid-cards">
-            <div class="card-info">
-                <h3>Seu Plano Atual</h3>
-                <div class="valor"><?php echo $dados_aluno['nome_plano']; ?></div>
-                <small>Mensalidade: R$ <?php echo number_format($dados_aluno['preco'], 2, ',', '.'); ?></small>
+            <div class="form-group">
+                <label for="nome">Nome Completo</label>
+                <input type="text" name="nome" required placeholder="Digite seu nome">
             </div>
 
-            <div class="card-info">
-                <h3>Status da Matrícula</h3>
-                <div class="valor" style="color: #00ff88;">ATIVO</div>
-                <small>Desde <?php echo date('d/m/Y', strtotime($dados_aluno['data_cadastro'])); ?></small>
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" name="email" required placeholder="seu@email.com">
             </div>
 
-            <div class="card-info" style="border-left-color: #fff;">
-                <h3>Treino de Hoje</h3>
-                <div class="valor">Peito e Tríceps</div>
-                <button style="margin-top:10px; padding:5px 10px; background:#00ff88; border:none; cursor:pointer;">Ver Ficha</button>
+            <div class="form-group">
+                <label for="telefone">Celular</label>
+                <input type="tel" name="telefone" required placeholder="(00) 00000-0000">
             </div>
-        </div>
+
+            <div class="form-group">
+                <label for="senha">Crie uma Senha</label>
+                <input type="password" name="senha" required placeholder="Mínimo 6 caracteres">
+            </div>
+
+            <button type="submit" class="btn-cta" style="width: 100%; border: none; cursor: pointer;">CONFIRMAR MATRÍCULA</button>
+        </form>
     </div>
+
 </body>
 </html>
