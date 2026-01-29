@@ -1,81 +1,98 @@
 <?php
 require_once 'config/database.php';
-require_once 'includes/header.php';
 
-$erro = "";
-$sucesso = "";
+$msg = "";
+$plano_id = $_GET['plano'] ?? 1;
 
-$nome = $email = $telefone = ""; 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nome = htmlspecialchars($_POST['nome']);
-    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
-    $telefone = htmlspecialchars($_POST['telefone']);
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $senha = $_POST['senha'];
-    $plano_id = $_POST['plano_id'];
+    $tel = $_POST['telefone'];
+    $plano = $_POST['plano_id'];
 
-    if (empty($nome) || empty($email) || empty($senha)) {
-        $erro = "Preencha todos os campos obrigatórios.";
-    } else {
-        $stmt = $pdo->prepare("SELECT id FROM alunos WHERE email = ?");
-        $stmt->execute([$email]);
-        
-        if ($stmt->rowCount() > 0) {
-            $erro = "Este e-mail já está cadastrado.";
-        } else {
-            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
-            $sql = "INSERT INTO alunos (nome, email, senha, telefone, plano_id) VALUES (?, ?, ?, ?, ?)";
-            try {
-                $pdo->prepare($sql)->execute([$nome, $email, $senha_hash, $telefone, $plano_id]);
-                $sucesso = "Cadastro realizado! Redirecionando...";
-                header("refresh:2;url=login.php");
-            } catch (PDOException $e) {
-                $erro = "Erro no sistema. Tente novamente.";
+    if ($nome && $email && $senha) {
+        $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+
+        try {
+            $stmt = $pdo->prepare("INSERT INTO alunos (nome, email, senha, telefone, plano_id) VALUES (?,?,?,?,?)");
+            $stmt->execute([$nome, $email, $senha_hash, $tel, $plano]);
+            echo "<script>alert('Cadastro realizado com sucesso!'); window.location='login.php';</script>";
+        } catch (PDOException $e) {
+            if ($e->getCode() == 23000) {
+                $msg = "Este e-mail já possui cadastro.";
+            } else {
+                $msg = "Erro ao processar cadastro.";
             }
         }
+    } else {
+        $msg = "Por favor, preencha todos os campos.";
     }
 }
-
-$plano_selecionado = isset($_GET['plano']) ? $_GET['plano'] : 1;
 ?>
 
-<div class="container-small">
-    <div class="form-box">
-        <h2 style="text-align:center; margin-bottom:20px;">Criar Conta</h2>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | Academia Pro</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="animated-bg">
+
+    <div class="form-container">
+        <a href="index.php" style="color:#666; text-decoration:none; font-size:0.9rem;">&larr; Cancelar</a>
         
-        <?php if($erro): ?> <div class="alert alert-error"><?php echo $erro; ?></div> <?php endif; ?>
-        <?php if($sucesso): ?> <div class="alert alert-success"><?php echo $sucesso; ?></div> <?php endif; ?>
+        <div style="text-align: center; margin: 20px 0;">
+            <h2 style="font-size: 2rem; color: #fff;">CRIAR CONTA</h2>
+            <p style="color: #888;">Junte-se ao time <span style="color:var(--primary)">PRO</span></p>
+        </div>
 
-        <form method="POST">
-            <input type="hidden" name="plano_id" value="<?php echo $plano_selecionado; ?>">
-            
-            <div class="input-group">
-                <label>Nome Completo</label>
-                <input type="text" name="nome" value="<?php echo $nome; ?>" required>
-            </div>
-            
-            <div class="input-group">
-                <label>E-mail</label>
-                <input type="email" name="email" value="<?php echo $email; ?>" required>
+        <?php if($msg): ?>
+            <div class="msg error"><i class="fas fa-exclamation-triangle"></i> <?php echo $msg; ?></div>
+        <?php endif; ?>
+        
+        <form method="POST" autocomplete="off">
+            <input type="hidden" name="plano_id" value="<?php echo $plano_id; ?>">
+
+            <label>Nome Completo</label>
+            <input type="text" name="nome" required autocomplete="off">
+
+            <label>E-mail</label>
+            <input type="email" name="email" required autocomplete="new-password">
+
+            <label>Celular</label>
+            <input type="tel" name="telefone" required placeholder="(00) 00000-0000" autocomplete="off">
+
+            <label>Crie uma Senha</label>
+            <div class="password-wrapper">
+                <input type="password" name="senha" id="senhaCad" required autocomplete="new-password">
+                <i class="fas fa-eye toggle-password" onclick="togglePassword('senhaCad', this)"></i>
             </div>
 
-            <div class="input-group">
-                <label>Telefone</label>
-                <input type="tel" name="telefone" value="<?php echo $telefone; ?>" placeholder="(00) 00000-0000">
-            </div>
-
-            <div class="input-group">
-                <label>Senha</label>
-                <input type="password" name="senha" required>
-            </div>
-
-            <button type="submit" class="btn-cta" style="width:100%; border:none; cursor:pointer;">FINALIZAR</button>
+            <button type="submit" class="btn-cta" style="width:100%; margin-top:20px;">FINALIZAR MATRÍCULA</button>
         </form>
-        <p style="text-align:center; margin-top:15px; font-size:0.9rem; color:#666;">
-            Já tem conta? <a href="login.php" style="color:var(--primary-color);">Faça Login</a>
+
+        <p style="text-align:center; margin-top:20px; color:#666; font-size:0.9rem;">
+            Ao clicar em finalizar, você concorda com nossos termos de uso.
         </p>
     </div>
-</div>
 
-<?php require_once 'includes/footer.php'; ?>
+    <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -2,25 +2,22 @@
 session_start();
 require_once 'config/database.php';
 
-$erro = "";
+if (isset($_SESSION['usuario_id'])) { header("Location: painel.php"); exit; }
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
     $senha = $_POST['senha'];
 
-    $sql = "SELECT * FROM alunos WHERE email = ?";
-    $stmt = $pdo->prepare($sql);
+    $stmt = $pdo->prepare("SELECT * FROM alunos WHERE email = ?");
     $stmt->execute([$email]);
-    $usuario = $stmt->fetch();
+    $user = $stmt->fetch();
 
-    if ($usuario && password_verify($senha, $usuario['senha'])) {
-        $_SESSION['usuario_id'] = $usuario['id'];
-        $_SESSION['usuario_nome'] = $usuario['nome'];
-        
+    if ($user && password_verify($senha, $user['senha'])) {
+        $_SESSION['usuario_id'] = $user['id'];
         header("Location: painel.php");
         exit;
     } else {
-        $erro = "E-mail ou senha incorretos!";
+        $erro = "E-mail ou senha incorretos.";
     }
 }
 ?>
@@ -32,40 +29,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login | Academia Pro</title>
     <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <header>
-        <h1>ACADEMIA <span>PRO</span></h1>
-        <nav><a href="index.php">Voltar</a></nav>
-    </header>
-
-    <div class="container-form">
-        <h2 style="text-align: center; margin-bottom: 20px;">Acesso ao Aluno</h2>
+<body class="animated-bg"> <div class="form-container">
+        <a href="index.php" style="color:#666; text-decoration:none; font-size:0.9rem;">&larr; Voltar</a>
         
-        <?php if($erro): ?>
-            <div class="msg-erro"><?php echo $erro; ?></div>
+        <div style="text-align: center; margin: 20px 0;">
+            <h2 style="font-size: 2rem; color: #fff;">BEM-VINDO</h2>
+            <p style="color: var(--primary); letter-spacing: 2px;">ACADEMIA PRO</p>
+        </div>
+
+        <?php if(isset($erro)): ?>
+            <div class="msg error"><i class="fas fa-exclamation-circle"></i> <?php echo $erro; ?></div>
         <?php endif; ?>
-
-        <form method="POST">
-            <div class="form-group">
-                <label>E-mail</label>
-                <input type="email" name="email" border:none; required>
+        
+        <form method="POST" autocomplete="off">
+            <label>Seu E-mail</label>
+            <input type="email" name="email" required placeholder="exemplo@email.com" autocomplete="off">
+            
+            <label>Sua Senha</label>
+            <div class="password-wrapper">
+                <input type="password" name="senha" id="senhaInput" required placeholder="Digite sua senha">
+                <i class="fas fa-eye toggle-password" onclick="togglePassword('senhaInput', this)"></i>
             </div>
 
-            <br>
-
-            <div class="form-group">
-                <label>Senha</label>
-                <input type="password" name="senha" border:none; required>
-            </div>
-
-            <br>
-
-            <button type="submit" class="btn-cta" style="width:100%; border:none; cursor:pointer;">ENTRAR</button>
+            <button type="submit" class="btn-cta" style="width:100%; margin-top:20px;">ACESSAR SISTEMA</button>
         </form>
-        <p style="text-align:center; margin-top:15px; color:#aaa;">
-            Ainda não tem conta? <a href="cadastro.php?plano=1" style="color:#00ff88;">Cadastre-se</a>
+
+        <p style="text-align:center; margin-top:20px; color:#666;">
+            Não tem cadastro? <a href="cadastro.php" style="color:var(--primary);">Criar conta</a>
         </p>
     </div>
+
+    <script>
+        function togglePassword(inputId, icon) {
+            const input = document.getElementById(inputId);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        }
+    </script>
 </body>
 </html>
