@@ -72,3 +72,50 @@ nav a:hover { color: #00ff88; }
     font-weight: bold;
 }
 .btn-matricula:hover { background-color: #00ff88; color: #000; }
+.container-form {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 40px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    border: 1px solid #333;
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+}
+.form-group { margin-bottom: 20px; text-align: left; }
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #00ff88;
+    font-weight: 500;
+}
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background-color: #121212;
+    border: 1px solid #333;
+    color: #fff;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+.form-group input:focus {
+    border-color: #00ff88;
+    box-shadow: 0 0 8px rgba(0, 255, 136, 0.3);
+}
+.msg-sucesso {
+    background-color: rgba(0, 255, 136, 0.2);
+    border: 1px solid #00ff88;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #fff;
+    border-radius: 5px;
+}
+.msg-erro {
+    background-color: rgba(255, 0, 0, 0.2);
+    border: 1px solid #ff4444;
+    padding: 15px;
+    margin-bottom: 20px;
+    color: #fff;
+    border-radius: 5px;
+}
