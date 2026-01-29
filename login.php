@@ -49,15 +49,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <form method="POST">
             <div class="form-group">
                 <label>E-mail</label>
-                <input type="email" name="email" required>
+                <input type="email" name="email" border:none; required>
             </div>
 
             <br>
 
             <div class="form-group">
                 <label>Senha</label>
-                <input type="password" name="senha" required>
+                <input type="password" name="senha" border:none; required>
             </div>
+
+            <br>
+
             <button type="submit" class="btn-cta" style="width:100%; border:none; cursor:pointer;">ENTRAR</button>
         </form>
         <p style="text-align:center; margin-top:15px; color:#aaa;">

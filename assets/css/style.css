@@ -48,3 +48,51 @@ nav a:hover { color: var(--primary-color); }
 .input-group label { display: block; margin-bottom: 5px; color: #ccc; }
 .input-group input { width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: #fff; }
 .input-group input:focus { border-color: var(--primary-color); outline: none; }
+
+.treino-container {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 20px;
+    margin-bottom: 30px;
+    border: 1px solid #333;
+}
+.treino-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--primary-color);
+}
+.treino-header h3 { color: #fff; font-size: 1.2rem; }
+.treino-header span { color: var(--text-muted); font-size: 0.9rem; }
+
+.table-responsive { overflow-x: auto; }
+.table-treino {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    min-width: 500px;
+}
+.table-treino th {
+    text-align: left;
+    padding: 12px;
+    color: var(--primary-color);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    border-bottom: 1px solid #444;
+}
+.table-treino td {
+    padding: 12px;
+    border-bottom: 1px solid #222;
+}
+.table-treino tr:last-child td { border-bottom: none; }
+.table-treino tr:hover { background-color: rgba(0, 255, 136, 0.05); }
+
+.carga-tag {
+    background: #333;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--primary-color);
+}
