@@ -1,5 +1,9 @@
 <?php
 if (session_status() === PHP_SESSION_NONE) { session_start(); }
+if (!defined('BASE_URL')) {
+    define('BASE_URL', 'http://localhost/nova_academia/');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">

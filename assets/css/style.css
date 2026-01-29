@@ -1,0 +1,50 @@
+:root {
+    --primary-color: #00ff88;
+    --bg-color: #0a0a0a;
+    --card-bg: #141414;
+    --text-color: #ffffff;
+    --danger: #ff4444;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+body { background-color: var(--bg-color); color: var(--text-color); }
+
+header {
+    background-color: #000;
+    padding: 1rem 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.logo { color: #fff; text-decoration: none; font-weight: bold; font-size: 1.5rem; }
+.logo span { color: var(--primary-color); }
+
+nav a { color: #9dffa2; text-decoration: none; margin-left: 20px; transition: 0.3s; }
+nav a:hover { color: var(--primary-color); }
+
+.hero {
+    padding: 100px 20px; text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover; background-position: center;
+}
+.hero h2 { font-size: 3rem; margin-bottom: 20px; }
+.hero span { color: var(--primary-color); }
+
+.btn-cta {
+    padding: 15px 30px; background: var(--primary-color); color: #000;
+    text-decoration: none; font-weight: bold; border-radius: 5px; display: inline-block;
+}
+
+.grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 50px 5%; }
+.card { background: var(--card-bg); padding: 20px; border: 1px solid #333; border-radius: 10px; text-align: center; }
+.card h3 { color: var(--primary-color); }
+.card .price { font-size: 2rem; display: block; margin: 15px 0; font-weight: bold; }
+
+.container-small { max-width: 400px; margin: 50px auto; padding: 20px; background: var(--card-bg); border-radius: 10px; }
+.input-group { margin-bottom: 15px; }
+.input-group label { display: block; margin-bottom: 5px; color: #ccc; }
+.input-group input { width: 100%; padding: 10px; background: #000; border: 1px solid #333; color: #fff; }
+.input-group input:focus { border-color: var(--primary-color); outline: none; }

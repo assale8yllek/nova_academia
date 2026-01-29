@@ -51,11 +51,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <label>E-mail</label>
                 <input type="email" name="email" required>
             </div>
+
+            <br>
+
             <div class="form-group">
                 <label>Senha</label>
                 <input type="password" name="senha" required>
             </div>
-            <button type="submit" class="btn-cta" style="width: 100%; border:none; cursor:pointer;">ENTRAR</button>
+            <button type="submit" class="btn-cta" style="width:100%; border:none; cursor:pointer;">ENTRAR</button>
         </form>
         <p style="text-align:center; margin-top:15px; color:#aaa;">
             Ainda não tem conta? <a href="cadastro.php?plano=1" style="color:#00ff88;">Cadastre-se</a>

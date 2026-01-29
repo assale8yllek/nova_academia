@@ -1,4 +1,5 @@
 <?php
+define('BASE_URL', 'http://localhost/nova_academia/');
 
 $host = 'localhost';
 $db   = 'academia_pro';
