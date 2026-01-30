@@ -54,7 +54,7 @@ $planos = $pdo->query("SELECT * FROM planos ORDER BY preco ASC")->fetchAll();
     <div class="grid-container">
         <?php foreach($planos as $p): ?>
             <?php 
-                // Verifica se é o plano Gold para destacar
+            
                 $isGold = (stripos($p['nome'], 'Gold') !== false); 
                 $classDestaque = $isGold ? 'featured' : '';
             ?>
