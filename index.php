@@ -1,10 +1,8 @@
 <?php
-// 1. Conexão e Header
+
 require_once 'config/database.php';
 require_once 'includes/header.php';
 
-// 2. Busca os planos para exibir lá embaixo
-// Ordena por preço para ficar visualmente lógico
 $planos = $pdo->query("SELECT * FROM planos ORDER BY preco ASC")->fetchAll();
 ?>
 
